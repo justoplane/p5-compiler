@@ -4,6 +4,10 @@
  */
 package submit.ast;
 
+import submit.MIPSResult;
+import submit.RegisterAllocator;
+import submit.SymbolTable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +23,23 @@ public class Call extends AbstractNode implements Expression {
   public Call(String id, List<Expression> args) {
     this.id = id;
     this.args = new ArrayList<>(args);
+  }
+
+  @Override
+  public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+
+    if (id.equals("println")){
+      Expression arg = args.get(0);
+      MIPSResult argResult = arg.toMIPS(code, data, symbolTable, regAllocator);
+
+      code.append(" li $v0, 11\n");
+      code.append(" li $a0, 10\n");
+      code.append(" syscall\n");
+
+      return MIPSResult.createVoidResult();
+    }
+
+    return MIPSResult.createVoidResult();
   }
 
   @Override
