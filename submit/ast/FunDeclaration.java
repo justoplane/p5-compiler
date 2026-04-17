@@ -49,6 +49,8 @@ public class FunDeclaration extends AbstractNode implements Declaration, Node {
 
   @Override
   public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+    SymbolTable functionScope = symbolTable.getNextChild();
+
     code.append(id).append(":\n");
 
     statement.toMIPS(code, data, symbolTable, regAllocator);

@@ -28,6 +28,12 @@ public class SymbolTable {
     this.addSymbol("println", new SymbolInfo("println", null, true));
   }
 
+  private SymbolTable(SymbolTable parent){
+    table = new HashMap<>();
+    this.parent = parent;
+    this.children = new ArrayList<>();
+  }
+
   public SymbolTable getNextChild() {
     if (childIndex < children.size()){
       return children.get(childIndex++);
@@ -72,9 +78,8 @@ public class SymbolTable {
    * @return
    */
   public SymbolTable createChild() {
-    SymbolTable child = new SymbolTable();
+    SymbolTable child = new SymbolTable(this);
     children.add(child);
-    child.parent = this;
     return child;
   }
 
