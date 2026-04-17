@@ -17,6 +17,8 @@ public class SymbolTable {
   private SymbolTable parent;
   private final List<SymbolTable> children;
   private static int labelCounter = 0; // global across machine code
+  private int localOffset = 0;
+  private int childIndex = 0;
 
   public SymbolTable() {
     table = new HashMap<>();
@@ -24,6 +26,19 @@ public class SymbolTable {
     children = new ArrayList<>();
 
     this.addSymbol("println", new SymbolInfo("println", null, true));
+  }
+
+  public SymbolTable getNextChild() {
+    if (childIndex < children.size()){
+      return children.get(childIndex++);
+    }
+    return this;
+  }
+
+  public int getNextOffset() {
+    int current = localOffset;
+    localOffset += 4;
+    return current;
   }
 
   public String getUniqueLabel() {

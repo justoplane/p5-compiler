@@ -4,6 +4,11 @@
  */
 package submit.ast;
 
+import submit.MIPSResult;
+import submit.RegisterAllocator;
+import submit.SymbolInfo;
+import submit.SymbolTable;
+
 /**
  *
  * @author edwajohn
@@ -31,4 +36,18 @@ public class Assignment extends AbstractNode implements Expression {
     }
   }
 
+  @Override
+  public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+    MIPSResult rhsResult = rhs.toMIPS(code, data, symbolTable, regAllocator);
+    String rhsReg = rhsResult.getRegister();
+
+    String varId = mutable.getId();
+    SymbolInfo info = symbolTable.find(varId);
+
+    code.append("  sw ").append(rhsReg).append(", -").append(info.getOffset()).append("($sp)\n");
+
+    regAllocator.clear(rhsReg);
+
+    return MIPSResult.createVoidResult();
+  }
 }

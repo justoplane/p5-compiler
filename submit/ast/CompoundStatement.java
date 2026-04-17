@@ -33,6 +33,9 @@ public class CompoundStatement extends AbstractNode implements Statement {
 
   @Override
   public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+
+    SymbolTable localScope = symbolTable.getNextChild();
+
     for (Statement s : statements){
       s.toMIPS(code, data, symbolTable, regAllocator);
     }

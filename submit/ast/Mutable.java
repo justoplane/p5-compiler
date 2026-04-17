@@ -4,6 +4,11 @@
  */
 package submit.ast;
 
+import submit.MIPSResult;
+import submit.RegisterAllocator;
+import submit.SymbolInfo;
+import submit.SymbolTable;
+
 /**
  *
  * @author edwajohn
@@ -28,4 +33,17 @@ public class Mutable extends AbstractNode implements Expression  {
     }
   }
 
+  public String getId() {
+    return id;
+  }
+
+  @Override
+  public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+    SymbolInfo info = symbolTable.find(id);
+    String reg = regAllocator.getT();
+
+    code.append("  lw ").append(reg).append(", -").append(info.getOffset()).append("($sp)\n");
+
+    return MIPSResult.createRegisterResult(reg, info.getType());
+  }
 }
