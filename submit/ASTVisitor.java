@@ -23,6 +23,10 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
         return (t.equals("int")) ? VarType.INT : (t.equals("bool")) ? VarType.BOOL : VarType.CHAR;
     }
 
+    public SymbolTable getSymbolTable() {
+        return symbolTable;
+    }
+
     @Override public Node visitProgram(CminusParser.ProgramContext ctx) {
         symbolTable = new SymbolTable();
         List<Declaration> decls = new ArrayList<>();

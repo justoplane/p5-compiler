@@ -4,11 +4,15 @@
  */
 package submit.ast;
 
+import submit.MIPSResult;
+import submit.RegisterAllocator;
+import submit.SymbolTable;
+
 /**
  *
  * @author edwajohn
  */
-public class StringConstant implements Expression {
+public class StringConstant extends AbstractNode implements Expression {
 
   private final String value;
 
@@ -18,6 +22,15 @@ public class StringConstant implements Expression {
 
   public void toCminus(StringBuilder builder, final String prefix) {
     builder.append("\"").append(value).append("\"");
+  }
+
+  @Override
+  public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator){
+    String label = symbolTable.getUniqueLabel();
+    
+    data.append(label).append(": .asciiz ").append(value).append("\n");
+
+    return MIPSResult.createAddressResult(label, VarType.CHAR);
   }
 
 }

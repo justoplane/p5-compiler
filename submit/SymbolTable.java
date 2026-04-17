@@ -16,11 +16,18 @@ public class SymbolTable {
   private final HashMap<String, SymbolInfo> table;
   private SymbolTable parent;
   private final List<SymbolTable> children;
+  private static int labelCounter = 0; // global across machine code
 
   public SymbolTable() {
     table = new HashMap<>();
     parent = null;
     children = new ArrayList<>();
+
+    this.addSymbol("println", new SymbolInfo("println", null, true));
+  }
+
+  public String getUniqueLabel() {
+    return "strLabel" + (labelCounter++);
   }
 
   public void addSymbol(String id, SymbolInfo symbol) {
@@ -59,5 +66,7 @@ public class SymbolTable {
   public SymbolTable getParent() {
     return parent;
   }
+
+
 
 }
