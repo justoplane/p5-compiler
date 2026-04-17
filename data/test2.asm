@@ -22,7 +22,7 @@ main:
  syscall
   li $t0, 3
   li $t1, 4
-  add $t2, $t0$t1
+  add $t2, $t0, $t1
   li $v0, 1
   move $a0, $t2
   syscall
@@ -41,7 +41,7 @@ main:
  syscall
   li $t0, 7
   li $t1, 1
-  mul $t2, $t0$t1
+  mul $t2, $t0, $t1
   li $v0, 1
   move $a0, $t2
   syscall
@@ -50,7 +50,7 @@ main:
  syscall
   li $t0, 7
   li $t1, 2
-  mul $t2, $t0$t1
+  mul $t2, $t0, $t1
   li $t0, 2
   div $t2, $t0
   mflo $t1

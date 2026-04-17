@@ -22,9 +22,7 @@ main:
  syscall
   li $t0, 3
   li $t1, 4
-  add $t2, $t0$t1
-  sub $t2, $t0$t1
-  mul $t2, $t0$t1
+  add $t2, $t0, $t1
   li $v0, 1
   move $a0, $t2
   syscall
@@ -43,16 +41,27 @@ main:
  syscall
   li $t0, 7
   li $t1, 1
-  mul $t2, $t0$t1
+  mul $t2, $t0, $t1
   li $v0, 1
   move $a0, $t2
   syscall
  li $v0, 11
  li $a0, 10
  syscall
+  li $t0, 7
+  li $t1, 2
+  mul $t2, $t0, $t1
   li $t0, 2
-  div null, $t0
+  div $t2, $t0
   mflo $t1
+  li $v0, 1
+  move $a0, $t1
+  syscall
+ li $v0, 11
+ li $a0, 10
+ syscall
+ li $v0, 10
+ syscall
 
 # All memory structures are placed after the
 # .data assembler directive

@@ -48,13 +48,13 @@ public class BinaryOperator extends AbstractNode implements Expression {
 
     switch (type) {
       case PLUS:
-        code.append("  add ").append(resultReg).append(", ").append(leftReg).append(rightReg).append("\n");
+        code.append("  add ").append(resultReg).append(", ").append(leftReg).append(", ").append(rightReg).append("\n");
         break;
       case MINUS:
-        code.append("  sub ").append(resultReg).append(", ").append(leftReg).append(rightReg).append("\n");
+        code.append("  sub ").append(resultReg).append(", ").append(leftReg).append(", ").append(rightReg).append("\n");
         break;
       case TIMES:
-        code.append("  mul ").append(resultReg).append(", ").append(leftReg).append(rightReg).append("\n");
+        code.append("  mul ").append(resultReg).append(", ").append(leftReg).append(", ").append(rightReg).append("\n");
         break;
       case DIVIDE:
         code.append("  div ").append(leftReg).append(", ").append(rightReg).append("\n");
