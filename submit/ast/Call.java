@@ -32,6 +32,18 @@ public class Call extends AbstractNode implements Expression {
       Expression arg = args.get(0);
       MIPSResult argResult = arg.toMIPS(code, data, symbolTable, regAllocator);
 
+      if (argResult.getType() == VarType.INT){
+        code.append("  li $v0, 1\n");
+        code.append("  move $a0, ").append(argResult.getRegister()).append("\n");
+        code.append("  syscall\n");
+
+        regAllocator.clear(argResult.getRegister());
+      } else {
+        code.append("  li $v0, 4\n");
+        code.append("  la $a0, ").append(argResult.getAddress()).append("\n");
+        code.append("  syscall\n");
+      }
+
       code.append(" li $v0, 11\n");
       code.append(" li $a0, 10\n");
       code.append(" syscall\n");

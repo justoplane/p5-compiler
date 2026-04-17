@@ -4,6 +4,10 @@
  */
 package submit.ast;
 
+import submit.MIPSResult;
+import submit.RegisterAllocator;
+import submit.SymbolTable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +21,15 @@ public class Program extends AbstractNode {
 
   public Program(List<Declaration> declarations) {
     this.declarations = new ArrayList<>(declarations);
+  }
+
+  @Override
+  public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+
+    for (Declaration declaration: declarations){
+      declaration.toMIPS(code, data, symbolTable, regAllocator);
+    }
+    return MIPSResult.createVoidResult();
   }
 
   @Override
