@@ -85,6 +85,10 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
         for (CminusParser.StatementContext d : ctx.statement()) {
             statements.add((Statement) visitStatement(d));
         }
+
+        CompoundStatement cs = new CompoundStatement(statements);
+        cs.setScope(symbolTable);
+
         symbolTable = symbolTable.getParent();
         return new CompoundStatement(statements);
     }

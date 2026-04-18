@@ -17,9 +17,14 @@ import java.util.List;
 public class CompoundStatement extends AbstractNode implements Statement {
 
   private final List<Statement> statements;
+  private SymbolTable scope;
 
   public CompoundStatement(List<Statement> statements) {
     this.statements = statements;
+  }
+
+  public void setScope(SymbolTable scope){
+    this.scope = scope;
   }
 
   @Override
@@ -37,7 +42,7 @@ public class CompoundStatement extends AbstractNode implements Statement {
     SymbolTable localScope = symbolTable.getNextChild();
 
     for (Statement s : statements){
-      s.toMIPS(code, data, symbolTable, regAllocator);
+      s.toMIPS(code, data, localScope, regAllocator);
     }
     return MIPSResult.createVoidResult();
   }
